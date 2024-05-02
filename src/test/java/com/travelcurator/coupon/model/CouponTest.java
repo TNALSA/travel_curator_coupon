@@ -94,7 +94,7 @@ class CouponTest {
 
         //when & then
         CouponIssueException exception = Assertions.assertThrows(CouponIssueException.class, coupon::issue);
-        Assertions.assertEquals(exception.getErrorCode(), ErrorCode.pbulicINVALID_COUPON_ISSUE_QUANTITY);
+        Assertions.assertEquals(exception.getErrorCode(), ErrorCode.INVALID_COUPON_ISSUE_QUANTITY);
     }
 
     @Test

@@ -6,9 +6,9 @@ import com.travelcurator.coupon.exception.ErrorCode;
 import com.travelcurator.coupon.model.Coupon;
 import com.travelcurator.coupon.model.CouponIssue;
 import com.travelcurator.coupon.model.CouponType;
-import com.travelcurator.coupon.repository.postgresql.CouponIssueJpaRepository;
-import com.travelcurator.coupon.repository.postgresql.CouponIssueRepository;
-import com.travelcurator.coupon.repository.postgresql.CouponJpaRepository;
+import com.travelcurator.coupon.repository.mysql.CouponIssueJpaRepository;
+import com.travelcurator.coupon.repository.mysql.CouponIssueRepository;
+import com.travelcurator.coupon.repository.mysql.CouponJpaRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -16,8 +16,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class CouponIssueServiceTest extends TestConfig {
     @Autowired
@@ -71,7 +69,7 @@ class CouponIssueServiceTest extends TestConfig {
     void issue_1(){
         //given
         long userId = 1;
-        Coupon coupon = Coupon.builder().couponType(CouponType.FIRST_COME_FIRST_SERVER)
+        Coupon coupon = Coupon.builder().couponType(CouponType.FIRST_COME_FIRST_SERVED)
                 .title("선착순 테스트 쿠폰")
                 .totalQuantity(100)
                 .issuedQuantity(0)
@@ -94,7 +92,7 @@ class CouponIssueServiceTest extends TestConfig {
     void issue_2(){
         //given
         long userId = 1;
-        Coupon coupon = Coupon.builder().couponType(CouponType.FIRST_COME_FIRST_SERVER)
+        Coupon coupon = Coupon.builder().couponType(CouponType.FIRST_COME_FIRST_SERVED)
                 .title("선착순 테스트 쿠폰")
                 .totalQuantity(100)
                 .issuedQuantity(100)
@@ -106,7 +104,7 @@ class CouponIssueServiceTest extends TestConfig {
         CouponIssueException exception = Assertions.assertThrows(CouponIssueException.class, () -> {
             sut.issue(coupon.getId(), userId);
         });
-        Assertions.assertEquals(exception.getErrorCode(), ErrorCode.pbulicINVALID_COUPON_ISSUE_QUANTITY);
+        Assertions.assertEquals(exception.getErrorCode(), ErrorCode.INVALID_COUPON_ISSUE_QUANTITY);
     }
 
     @Test
@@ -114,7 +112,7 @@ class CouponIssueServiceTest extends TestConfig {
     void issue_3(){
         //given
         long userId = 1;
-        Coupon coupon = Coupon.builder().couponType(CouponType.FIRST_COME_FIRST_SERVER)
+        Coupon coupon = Coupon.builder().couponType(CouponType.FIRST_COME_FIRST_SERVED)
                 .title("선착순 테스트 쿠폰")
                 .totalQuantity(100)
                 .issuedQuantity(0)
@@ -134,7 +132,7 @@ class CouponIssueServiceTest extends TestConfig {
     void issue_4(){
         //given
         long userId = 1;
-        Coupon coupon = Coupon.builder().couponType(CouponType.FIRST_COME_FIRST_SERVER)
+        Coupon coupon = Coupon.builder().couponType(CouponType.FIRST_COME_FIRST_SERVED)
                 .title("선착순 테스트 쿠폰")
                 .totalQuantity(100)
                 .issuedQuantity(0)

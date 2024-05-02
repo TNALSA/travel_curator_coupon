@@ -1,4 +1,4 @@
-package com.travelcurator.coupon.repository.postgresql;
+package com.travelcurator.coupon.repository.mysql;
 
 import com.travelcurator.coupon.model.Coupon;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,4 +1,4 @@
-package com.travelcurator.coupon.repository.postgresql;
+package com.travelcurator.coupon.repository.mysql;
 
 import com.querydsl.jpa.JPQLQueryFactory;
 import com.travelcurator.coupon.model.CouponIssue;
@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import static com.travelcurator.coupon.model.QCouponIssue.couponIssue;
+
 
 @RequiredArgsConstructor
 @Repository

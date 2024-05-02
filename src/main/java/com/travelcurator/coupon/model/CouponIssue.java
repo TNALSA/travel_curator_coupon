@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "coupon_issues")
 public class CouponIssue extends BaseTimeEntity{
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -31,7 +32,4 @@ public class CouponIssue extends BaseTimeEntity{
     private LocalDateTime dateIssued;
 
     private LocalDateTime dateUsed;
-
-
-
 }
