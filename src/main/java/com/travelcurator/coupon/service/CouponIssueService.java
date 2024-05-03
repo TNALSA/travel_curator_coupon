@@ -11,6 +11,12 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+/**
+ * 쿠폰 발급 관련 Service Class
+ * findCouponWithLock(): 쿠폰 정책에 대해 확인하는 메소드
+ * issue(): 발급 기한, 수량 확인 후 쿠폰을 발급하는 메소드
+ * saveCouponIssue(): 검증 완료 후 coupons_issue Table에 쿠폰 발급 내역을 저장하는 메서드
+ */
 @RequiredArgsConstructor
 @Service
 public class CouponIssueService {
