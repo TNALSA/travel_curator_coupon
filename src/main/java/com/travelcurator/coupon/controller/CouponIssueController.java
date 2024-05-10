@@ -21,6 +21,12 @@ public class CouponIssueController {
          return new CouponIssueResponseDto(true, null);
     }
 
+
+    /**
+     * redis를 이용한 쿠폰발급 요청
+      * @param body
+     * @return CouponIssueResponseDto -> 쿠폰 발급 성공 시 반환
+     */
     @PostMapping("/v1/issue-async")
     public CouponIssueResponseDto asyncIssueV1(@RequestBody CouponIssueRequestDto body){
         couponIssueRequestService.asyncIssueRequestV1(body);
