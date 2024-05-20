@@ -24,7 +24,8 @@ public class CouponIssueListener {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass().getSimpleName());
 
-    @Scheduled(fixedDelay = 1000L)
+    // @Scheduled는 Sprint Bean에 Component로 등록되기 때문에 따로 메서드를 호출하지 않아도 일정 시간/주기 마다 실행된다.
+    @Scheduled(fixedDelay = 3000L)
     public void issue() throws JsonProcessingException {
         log.info("listen...");
         while(existCouponIssueTarget()){

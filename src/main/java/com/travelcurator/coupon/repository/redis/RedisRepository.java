@@ -71,6 +71,7 @@ public class RedisRepository {
      * @return rightPush(key, value)에 대한 결과 값
      */
     public Long rPush(String key, String value){
+        System.out.println("rPush: Queue 적재 *******************************************************************");
         return redisTemplate.opsForList().rightPush(key, value);
     }
 
