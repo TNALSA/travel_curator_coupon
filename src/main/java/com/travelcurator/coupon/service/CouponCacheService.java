@@ -17,4 +17,9 @@ public class CouponCacheService {
         Coupon coupon = couponIssueService.findCoupon(couponId);
         return new CouponRedisEntity(coupon);
     }
+
+    @Cacheable(cacheNames = "coupon", cacheManager = "localCacheManager")
+    public CouponRedisEntity getCouponLocalCache(long couponId){
+        return getCouponCache(couponId);
+    }
 }

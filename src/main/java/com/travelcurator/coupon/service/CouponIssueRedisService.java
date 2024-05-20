@@ -7,6 +7,8 @@ import com.travelcurator.coupon.repository.redis.RedisRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import static com.travelcurator.coupon.exception.ErrorCode.DUPLICATED_COUPON_ISSUE;
+import static com.travelcurator.coupon.exception.ErrorCode.INVALID_COUPON_ISSUE_QUANTITY;
 import static com.travelcurator.coupon.util.CouponRedisUtils.getIssueRequestKey;
 
 @RequiredArgsConstructor
@@ -14,12 +16,12 @@ import static com.travelcurator.coupon.util.CouponRedisUtils.getIssueRequestKey;
 public class CouponIssueRedisService {
 
     private final RedisRepository redisRepository;
-    public void  checkCouponIssueQuantity(CouponRedisEntity couponRedisEntity, long userId){
+    public void    checkCouponIssueQuantity(CouponRedisEntity couponRedisEntity, long userId){
         if(!availableTotalIssueQuantity(couponRedisEntity.totalQuantity(), couponRedisEntity.id())){
-            throw new CouponIssueException(ErrorCode.INVALID_COUPON_ISSUE_QUANTITY,"발급 가능한 수량을 초과합니다. couponId: %s, userId: %s".formatted(couponRedisEntity.id(), userId));
+            throw new CouponIssueException(INVALID_COUPON_ISSUE_QUANTITY,"발급 가능한 수량을 초과합니다. couponId: %s, userId: %s".formatted(couponRedisEntity.id(), userId));
         }
         if(!availableUserIssueQuantity(couponRedisEntity.id(), userId)){
-            throw new CouponIssueException(ErrorCode.DUPLICATED_COUPON_ISSUE,"이미 발급 요청이 처리되었습니다. couponId: %s, userId: %s".formatted(couponRedisEntity.id(), userId));
+            throw new CouponIssueException(DUPLICATED_COUPON_ISSUE,"이미 발급 요청이 처리되었습니다. couponId: %s, userId: %s".formatted(couponRedisEntity.id(), userId));
         }
     }
 

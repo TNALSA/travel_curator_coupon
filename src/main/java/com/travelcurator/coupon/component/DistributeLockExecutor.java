@@ -12,7 +12,6 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class DistributeLockExecutor {
     private final RedissonClient redissonClient;
-
     private final Logger log = LoggerFactory.getLogger(this.getClass().getSimpleName());
 
     public void execute(String lockName, long waitMilSecond, long leaseMilliSecond, Runnable logic){

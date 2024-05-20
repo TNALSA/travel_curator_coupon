@@ -33,11 +33,22 @@ public class AsyncCouponIssueServiceV1 {
             issueRequest(couponId, userId);
         });
     }
+
+    /*
+    * 1. totalQuantity > redisRepository.sCard(key) -> 현재 쿠폰 발급 수량에 대한 검증
+    * 2. !redisRepository.sIsMember(key, String.valueOf(userId)) -> 중복 발급 검증
+    * 3. redisRepository.sAdd // 쿠폰 발급 요청 저장
+    * 4. redisRepository.rPush // 쿠폰 발급 큐 적재
+    * */
+
+
 private void issueRequest(long couponId, long userId){
         CouponIssueRequest issueRequest = new CouponIssueRequest(couponId, userId);
         try{
             String value = objectMapper.writeValueAsString(issueRequest);
+            // sAdd -> set에 새로운 요청을 삽입
             redisRepository.sAdd(getIssueRequestKey(couponId), String.valueOf(userId));
+            // rPush -> queue에 데이터를 적재
             redisRepository.rPush(getIssueRequestQueueKey(), value);
         }catch (JsonProcessingException e){
             throw new CouponIssueException(ErrorCode.FAIL_COUPON_ISSUE_REQUEST,"input: %s".formatted(issueRequest));
