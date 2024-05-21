@@ -1,5 +1,5 @@
 rootProject.name = 'coupon'
-include 'coupon-core'
-include 'coupon-api'
-include 'coupon-consumer'
+include ':coupon-core',':coupon-api',':coupon-consumer'
+
+
 

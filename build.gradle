@@ -4,12 +4,8 @@ plugins {
 	id 'io.spring.dependency-management' version '1.1.4'
 }
 
-bootJar{
+bootJar {
 	enabled = false
-}
-
-jar {
-	enabled = true
 }
 
 group = 'com.travelcurator'
@@ -30,9 +26,9 @@ repositories {
 }
 
 subprojects {
-	apply {plugin("java")}
-	apply {plugin("io.spring.dependency-management")}
-	apply {plugin("org.springframework.boot")}
+	apply plugin: 'java'
+	apply plugin: 'io.spring.dependency-management'
+	apply plugin: 'org.springframework.boot'
 
 	repositories {
 		mavenCentral()
@@ -53,12 +49,8 @@ subprojects {
 		annotationProcessor 'jakarta.annotation:jakarta.annotation-api'
 		annotationProcessor 'jakarta.persistence:jakarta.persistence-api'
 		testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
 	}
-
 }
-
-
 
 tasks.named('test') {
 	useJUnitPlatform()

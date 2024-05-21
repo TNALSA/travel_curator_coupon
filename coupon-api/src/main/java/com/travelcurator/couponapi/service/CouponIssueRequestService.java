@@ -11,8 +11,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 
-@Service
+
 @RequiredArgsConstructor
+@Service
 public class CouponIssueRequestService {
 
     private final CouponIssueService couponIssueService;

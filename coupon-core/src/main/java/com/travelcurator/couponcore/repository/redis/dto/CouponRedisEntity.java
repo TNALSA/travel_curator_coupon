@@ -1,57 +1,56 @@
 package com.travelcurator.couponcore.repository.redis.dto;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.travelcurator.couponcore.exception.CouponIssueException;
-import com.travelcurator.couponcore.exception.ErrorCode;
 import com.travelcurator.couponcore.model.Coupon;
 import com.travelcurator.couponcore.model.CouponType;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
 import java.time.LocalDateTime;
 
-/**
- * 해당 Parameter를 가져오기 위해 jackson 의존성을 추가한다.
- * @param id
- * @param c
- * @param totalQuantity
- * @param dateIssueStart
- * @param dateIssueEnd
- */
-public record CouponRedisEntity(Long id,
-                                CouponType c,
-                                Integer totalQuantity,
+import static com.travelcurator.couponcore.exception.ErrorCode.INVALID_COUPON_ISSUE_DATE;
+import static com.travelcurator.couponcore.exception.ErrorCode.INVALID_COUPON_ISSUE_QUANTITY;
 
-                                @JsonSerialize(using = LocalDateSerializer.class)
-                                @JsonDeserialize(using = LocalDateDeserializer.class)
-                                LocalDateTime dateIssueStart,
+public record CouponRedisEntity(
+        Long id,
+        CouponType couponType,
+        Integer totalQuantity,
 
-                                @JsonSerialize(using = LocalDateSerializer.class)
-                                @JsonDeserialize(using = LocalDateDeserializer.class)
-                                LocalDateTime dateIssueEnd
+        boolean availableIssueQuantity,
+
+        @JsonSerialize(using = LocalDateTimeSerializer.class)
+        @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+        LocalDateTime dateIssueStart,
+
+        @JsonSerialize(using = LocalDateTimeSerializer.class)
+        @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+        LocalDateTime dateIssueEnd
 ) {
-    public CouponRedisEntity(Coupon coupon){
+
+    public CouponRedisEntity(Coupon coupon) {
         this(
                 coupon.getId(),
                 coupon.getCouponType(),
                 coupon.getTotalQuantity(),
+                coupon.availableIssueQuantity(),
                 coupon.getDateIssueStart(),
                 coupon.getDateIssueEnd()
         );
     }
 
-
-    private boolean availableIssueDate(){
+    private boolean availableIssueDate() {
         LocalDateTime now = LocalDateTime.now();
         return dateIssueStart.isBefore(now) && dateIssueEnd.isAfter(now);
     }
 
-    // 발급 기한 검증
-    public void checkIssuableCoupon(){
-        if(!availableIssueDate()){
-            throw new CouponIssueException(ErrorCode.INVALID_COUPON_ISSUE_DATE, "발급 가능한 일자가 아닙니다. couponId: %s, issueStart:%s, issueEnd:%s".formatted(id, dateIssueStart, dateIssueEnd));
+    public void checkIssuableCoupon() {
+        if (!availableIssueQuantity) {
+            throw new CouponIssueException(INVALID_COUPON_ISSUE_QUANTITY, "모든 발급 수량이 소진되었습니다. coupon_id : %s".formatted(id));
         }
-
+        if (!availableIssueDate()) {
+            throw new CouponIssueException(INVALID_COUPON_ISSUE_DATE, "발급 가능한 일자가 아닙니다. request : %s, issueStart: %s, issueEnd: %s".formatted(LocalDateTime.now(), dateIssueStart, dateIssueEnd));
+        }
     }
 }

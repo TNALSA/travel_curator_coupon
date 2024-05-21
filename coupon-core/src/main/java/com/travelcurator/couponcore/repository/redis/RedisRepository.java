@@ -18,7 +18,6 @@ import static com.travelcurator.couponcore.util.CouponRedisUtils.getIssueRequest
 @RequiredArgsConstructor
 @Repository
 public class RedisRepository {
-
     private final RedisTemplate<String, String> redisTemplate;
     private final RedisScript<String> issueScript = issueRequestScript();
     private final String issueRequestQueueKey = getIssueRequestQueueKey();
@@ -72,7 +71,6 @@ public class RedisRepository {
      * @return rightPush(key, value)에 대한 결과 값
      */
     public Long rPush(String key, String value){
-        System.out.println("rPush: Queue 적재 *******************************************************************");
         return redisTemplate.opsForList().rightPush(key, value);
     }
 
@@ -120,7 +118,6 @@ public class RedisRepository {
 
      */
     public RedisScript<String> issueRequestScript(){
-        System.out.println("issueRequestScript*****************************************************************");
         String script = """
                 if redis.call('SISMEMBER', KEYS[1], ARGV[1]) == 1 then
                     return '2'
