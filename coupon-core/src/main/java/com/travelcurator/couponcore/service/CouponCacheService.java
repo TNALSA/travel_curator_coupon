@@ -33,7 +33,7 @@ public class CouponCacheService {
 
     @CachePut(cacheNames = "coupon", cacheManager = "localCacheManager")
     public CouponRedisEntity putCouponLocalCache(long couponId) {
-        return getCouponLocalCache(couponId);
+        return proxy().getCouponLocalCache(couponId);
     }
 
     private CouponCacheService proxy() {

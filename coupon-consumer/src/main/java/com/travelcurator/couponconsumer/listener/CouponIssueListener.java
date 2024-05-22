@@ -22,7 +22,6 @@ public class CouponIssueListener {
     private final CouponIssueService couponIssueService;
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final String issueRequestQueueKey = getIssueRequestQueueKey();
-
     private final Logger log = LoggerFactory.getLogger(this.getClass().getSimpleName());
 
     // @Scheduled는 Sprint Bean에 Component로 등록되기 때문에 따로 메서드를 호출하지 않아도 일정 시간/주기 마다 실행된다.
@@ -31,9 +30,9 @@ public class CouponIssueListener {
         log.info("listen...");
         while(existCouponIssueTarget()){
             CouponIssueRequest target = getIssueTarget();
-            log.info("발급 시작 target: %s".formatted(target));
+            log.info("발급 시작 target :" + target);
             couponIssueService.issue(target.couponId(), target.userId());
-            log.info("발급 완료 tartget: %s".formatted(target));
+            log.info("발급 완료 target :" + target);
             removeIssuedTarget();
         }
     }

@@ -7,9 +7,12 @@ import com.travelcurator.couponcore.model.CouponIssue;
 import com.travelcurator.couponcore.repository.mysql.CouponIssueJpaRepository;
 import com.travelcurator.couponcore.repository.mysql.CouponIssueRepository;
 import com.travelcurator.couponcore.repository.mysql.CouponJpaRepository;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import static com.travelcurator.couponcore.exception.ErrorCode.COUPON_NOT_EXIST;
+import static com.travelcurator.couponcore.exception.ErrorCode.DUPLICATED_COUPON_ISSUE;
 
 /**
  * 쿠폰 발급 관련 Service Class
@@ -31,17 +34,18 @@ public class CouponIssueService {
         saveCouponIssue(couponId, userId); //coupon insert
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Coupon findCoupon(long couponId){
         return couponJpaRepository.findById(couponId).orElseThrow(() -> {
-            throw new CouponIssueException(ErrorCode.COUPON_NOT_EXIST,"쿠폰 정책이 존재하지 않습니다. %s".formatted(couponId));
+            throw new CouponIssueException(COUPON_NOT_EXIST,"쿠폰 정책이 존재하지 않습니다. %s".formatted(couponId));
         });
     }
 
     @Transactional
     public Coupon findCouponWithLock(long couponId){
+        System.out.println("[Log]couponId: "+couponId);
         return couponJpaRepository.findCouponWithLock(couponId).orElseThrow(() -> {
-            throw new CouponIssueException(ErrorCode.COUPON_NOT_EXIST,"쿠폰 정책이 존재하지 않습니다. %s".formatted(couponId));
+            throw new CouponIssueException(COUPON_NOT_EXIST,"쿠폰 정책이 존재하지 않습니다. %s".formatted(couponId));
         });
     }
 
@@ -58,7 +62,7 @@ public class CouponIssueService {
     private void checkAlreadyIssuance(long couponId, long userId){
         CouponIssue issue = couponIssueRepository.findFirstCouponIssue(couponId, userId);
         if(issue != null){
-            throw new CouponIssueException(ErrorCode.DUPLICATED_COUPON_ISSUE,"이미 발급된 쿠폰입니다. user_id: %s, coupon_id: %s".formatted(userId,couponId));
+            throw new CouponIssueException(DUPLICATED_COUPON_ISSUE,"이미 발급된 쿠폰입니다. user_id: %s, coupon_id: %s".formatted(userId,couponId));
         }
     }
 }
