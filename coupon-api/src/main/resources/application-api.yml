@@ -1,6 +1,8 @@
 spring:
   application:
     name: coupon-api
+  profiles:
+    active: local
 server:
   port: 8080
   tomcat:

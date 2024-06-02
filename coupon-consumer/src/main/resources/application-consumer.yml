@@ -1,6 +1,9 @@
 spring:
   application:
     name: coupon-consumer
+  profiles:
+    active: local
+
 server:
   port: 8081
 
