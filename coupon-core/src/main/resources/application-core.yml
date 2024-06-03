@@ -4,7 +4,7 @@ spring:
       on-profile: local
   datasource:
     hikari:
-      jdbc-url: jdbc:mysql://localhost:3306/coupon?useUnicode=yes&characterEncoding=UTF-8&rewriteBatchedStatements=true
+      jdbc-url: jdbc:mysql://172.18.0.2:3306/coupon?useUnicode=yes&characterEncoding=UTF-8&rewriteBatchedStatements=true
       driver-class-name: com.mysql.cj.jdbc.Driver
       maximum-pool-size: 10
       max-lifetime: 30000
@@ -20,7 +20,7 @@ spring:
         format_sql: true
   data:
     redis:
-      host: localhost
+      host: 172.18.0.3
       port: 6380
 ---
 spring:

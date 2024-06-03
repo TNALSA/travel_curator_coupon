@@ -1,5 +1,23 @@
 version: '3.7'
 services:
+  coupon-api:
+    container_name: coupon-api
+    image: tnalsa/coupon-api
+    ports:
+      - 8080:8080
+    links:
+      - mysql
+      - redis
+
+  coupon-consumer:
+    container_name: coupon-consumer
+    image: tnalsa/coupon-consumer
+    ports:
+      - 8081:8081
+    links:
+      - mysql
+      - redis
+
   redis:
     container_name: coupon-redis
     image: redis:7.2-alpine
@@ -9,6 +27,7 @@ services:
       - "mode=standalone"
     ports:
       - 6380:6380
+
   mysql:
     container_name: coupon-mysql
     image: ubuntu/mysql:edge
