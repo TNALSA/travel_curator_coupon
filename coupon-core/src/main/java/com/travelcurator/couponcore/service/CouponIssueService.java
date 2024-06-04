@@ -28,7 +28,7 @@ public class CouponIssueService {
     private final CouponIssueRepository couponIssueRepository;
 
     @Transactional
-    public void issue(long couponId, long userId){
+    public void issue(long couponId, String userId){
         Coupon coupon = findCouponWithLock(couponId); //해당 쿠폰이 이미 존재하는지 검증
         coupon.issue(); //수량, 기한 검증, 발급 수량 증가
         saveCouponIssue(couponId, userId); //coupon insert
@@ -50,7 +50,7 @@ public class CouponIssueService {
     }
 
     @Transactional
-    public CouponIssue saveCouponIssue(long couponId, long userId){
+    public CouponIssue saveCouponIssue(long couponId, String userId){
         checkAlreadyIssuance(couponId, userId);
         CouponIssue issue = CouponIssue.builder()
                 .couponId(couponId)
@@ -59,7 +59,7 @@ public class CouponIssueService {
         return couponIssueJpaRepository.save(issue);
     }
 
-    private void checkAlreadyIssuance(long couponId, long userId){
+    private void checkAlreadyIssuance(long couponId, String userId){
         CouponIssue issue = couponIssueRepository.findFirstCouponIssue(couponId, userId);
         if(issue != null){
             throw new CouponIssueException(DUPLICATED_COUPON_ISSUE,"이미 발급된 쿠폰입니다. user_id: %s, coupon_id: %s".formatted(userId,couponId));

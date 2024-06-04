@@ -32,7 +32,7 @@ public class CouponIssueController {
         return new CouponIssueResponseDto(true, null);
     }
 
-    @PostMapping("/v2/issue-async")
+    @PostMapping("/v2/issue-async") // @RequestBody로 데이터를 받는다.
     public CouponIssueResponseDto asyncIssueV2(@RequestBody CouponIssueRequestDto body){
         couponIssueRequestService.asyncIssueRequestV2(body);
         return new CouponIssueResponseDto(true, null);

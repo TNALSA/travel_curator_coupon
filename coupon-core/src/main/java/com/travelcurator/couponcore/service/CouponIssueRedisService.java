@@ -16,7 +16,7 @@ import static com.travelcurator.couponcore.util.CouponRedisUtils.getIssueRequest
 public class CouponIssueRedisService {
 
     private final RedisRepository redisRepository;
-    public void    checkCouponIssueQuantity(CouponRedisEntity couponRedisEntity, long userId){
+    public void    checkCouponIssueQuantity(CouponRedisEntity couponRedisEntity, String userId){
         if(!availableTotalIssueQuantity(couponRedisEntity.totalQuantity(), couponRedisEntity.id())){
             throw new CouponIssueException(INVALID_COUPON_ISSUE_QUANTITY,"발급 가능한 수량을 초과합니다. couponId: %s, userId: %s".formatted(couponRedisEntity.id(), userId));
         }
@@ -33,7 +33,7 @@ public class CouponIssueRedisService {
         return totalQuantity > redisRepository.sCard(key);
     }
 
-    public boolean availableUserIssueQuantity(long couponId, long userId){
+    public boolean availableUserIssueQuantity(long couponId, String userId){
         String key = getIssueRequestKey(couponId);
         return !redisRepository.sIsMember(key, String.valueOf(userId));
     }

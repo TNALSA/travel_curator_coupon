@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class AsyncCouponIssueServiceV2 {
     private final RedisRepository redisRepository;
     private final CouponCacheService couponCacheService;
-    public void issue(long couponId, long userId){
+    public void issue(long couponId, String userId){
         // Redis Cache
         // CouponRedisEntity coupon = couponCacheService.getCouponCache(couponId);
 
@@ -21,7 +21,7 @@ public class AsyncCouponIssueServiceV2 {
         issueRequest(couponId, userId, coupon.totalQuantity());
     }
 
-    private void issueRequest(long couponId, long userId, Integer totalIssueQuantity){
+    private void issueRequest(long couponId, String userId, Integer totalIssueQuantity){
         if(totalIssueQuantity == null){
             redisRepository.issueRequest(couponId, userId, Integer.MAX_VALUE);
         }

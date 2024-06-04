@@ -14,7 +14,7 @@ public class CouponIssueRepository {
 
     private  final JPQLQueryFactory queryFactory;
 
-    public CouponIssue findFirstCouponIssue(long couponId, long userId){
+    public CouponIssue findFirstCouponIssue(long couponId, String userId){
         return queryFactory.selectFrom(couponIssue)
                 .where(couponIssue.couponId.eq(couponId))
                 .where(couponIssue.userId.eq(userId))

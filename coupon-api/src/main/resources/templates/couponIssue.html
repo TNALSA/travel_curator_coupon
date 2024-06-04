@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
     <title>Coupon Issue</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <meta http-equiv="Content-Type" content="application/json" charset="UTF-8" />
     <style>
         .coupon-container {
             text-align: center;
@@ -13,10 +13,24 @@
 </head>
 <body>
 <div class="container coupon-container">
-    <h2>Coupon Issue</h2>
-    <div class="mt-4">
-        <button class="btn btn-success" onclick="alert('쿠폰이 발급되었습니다!')">쿠폰 발급</button>
-    </div>
+    <input value="쿠폰 발급" type="button" onclick="dataSend()">
 </div>
+
+<script>
+    function dataSend() {
+        console.log("dataSend")
+        const userId = $("#userId").val();
+
+        $.ajax({
+            url: "/v2/issue-async",
+            data: {"userId": userId,
+                "couponId": 1
+            },
+            type:"post",
+        }).done(function (fragment) {
+            $("#userId").replaceWith(fragment);
+        });
+    }
+</script>
 </body>
 </html>

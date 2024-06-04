@@ -24,7 +24,7 @@ public class AsyncCouponIssueServiceV1 {
     private final CouponCacheService couponCacheService;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public void issue(long couponId, long userId){
+    public void issue(long couponId, String userId){
         CouponRedisEntity coupon = couponCacheService.getCouponCache(couponId);
         coupon.checkIssuableCoupon();
         distributeLockExecutor.execute("lock_%s".formatted(couponId),3000,3000, ()->{
@@ -41,7 +41,7 @@ public class AsyncCouponIssueServiceV1 {
     * */
 
 
-private void issueRequest(long couponId, long userId){
+private void issueRequest(long couponId, String userId){
         CouponIssueRequest issueRequest = new CouponIssueRequest(couponId, userId);
         try{
             String value = objectMapper.writeValueAsString(issueRequest);

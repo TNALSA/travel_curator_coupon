@@ -84,7 +84,7 @@ public class RedisRepository {
         return redisTemplate.opsForList().leftPop(key);
     }
 
-    public void issueRequest(long couponId, long userId, int totalIssueQuantity){
+    public void issueRequest(long couponId, String userId, int totalIssueQuantity){
         String issueRequestKey = getIssueRequestKey(couponId);
         CouponIssueRequest couponIssueRequest = new CouponIssueRequest(couponId, userId);
         try{
