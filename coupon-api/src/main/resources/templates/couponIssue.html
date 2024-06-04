@@ -10,25 +10,32 @@
             margin-top: 50px;
         }
     </style>
+    <!-- jQuery 추가 -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 </head>
 <body>
 <div class="container coupon-container">
-    <input value="쿠폰 발급" type="button" onclick="dataSend()">
+    <input type="hidden" id="userId" th:value="${userId}" >
+    <button onclick="dataSend()">쿠폰</button>
 </div>
-
 <script>
     function dataSend() {
-        console.log("dataSend")
         const userId = $("#userId").val();
-
         $.ajax({
             url: "/v2/issue-async",
-            data: {"userId": userId,
-                "couponId": 1
+            type: "POST",
+            data: JSON.stringify({
+                'userId': userId,
+                'couponId': 1
+            }),
+            contentType: 'application/json; charset=utf-8',
+            dataType: "json",
+            success: function(response) {
+                console.log("Response:", response);
             },
-            type:"post",
-        }).done(function (fragment) {
-            $("#userId").replaceWith(fragment);
+            error: function(xhr, status, error) {
+                console.error("Error:", error);
+            }
         });
     }
 </script>

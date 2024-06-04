@@ -16,7 +16,7 @@ public class LoginController {
             model.addAttribute("userId", userId);
             model.addAttribute("password", password);
 
-            return "couponIssue";
+            return "home";
         }
 
 }
