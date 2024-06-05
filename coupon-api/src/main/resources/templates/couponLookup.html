@@ -1,9 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>쿠폰 목록 조회</title>
+    <title>Travel Qurator</title>
 </head>
 <body>
+    <table>
+        <tr>
+            <th>사용 가능한 쿠폰</th>
+        </tr>
+        <tr th:each="user : ${list}">
+            <td th:text="${user.getTitle()}"></td>
+        </tr>
+    </table>
 </body>
 </html>

@@ -10,6 +10,6 @@ import java.util.Optional;
 
 public interface CouponLookupJpaRepository extends JpaRepository<CouponIssue,Long> {
     //@Query("SELECT ci FROM CouponIssue ci INNER JOIN Coupon c ON ci.couponId = c.id WHERE ci.userId = :userId")
-    @Query("SELECT ci FROM CouponIssue ci WHERE ci.userId = :userId")
-    List<CouponIssue> lookupCoupon(long userId);
+    @Query("SELECT c FROM Coupon c INNER JOIN CouponIssue ci ON c.id = ci.couponId WHERE ci.userId = :userId")
+    List<Coupon> lookupCoupon(String userId);
 }

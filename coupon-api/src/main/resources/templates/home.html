@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -53,7 +53,8 @@
 
 <body>
 <div class="popup" id="popup">
-    <h2>쿠폰 발급</h2>
+    <button onclick="closePopup()" style="color: crimson">X</button>
+    <h2>선착순 이벤트 쿠폰</h2>
     <p>특별 혜택을 누리세요!</p>
     <input type="hidden" id="userId" th:value="${userId}" >
     <button onclick="couponIssue()">쿠폰 받기</button>
@@ -63,7 +64,6 @@
     window.onload = function() {
         document.getElementById('popup').classList.add('show');
     }
-
     // Function to be executed when the "Get Coupon" button is clicked
     function couponIssue() {
         alert("쿠폰이 발급되었습니다.")
@@ -101,7 +101,7 @@
             <li><a href="#">홈</a></li>
             <li><a href="#">추천 여행지</a></li>
             <li><a href="#">여행 팁</a></li>
-            <li><a href="#">문의하기</a></li>
+            <li><a th:href="@{/v1/lookup/{userId} (userId=${userId})}" >내 쿠폰</a></li>
         </ul>
     </nav>
 </header>
@@ -134,7 +134,7 @@
 </main>
 
 <footer>
-    <p>© 2024 여행 상품 추천 사이트. 모든 권리 보유.</p>
+    <p>© 2024 Travel Qurator. 모든 권리 보유.</p>
 </footer>
 </body>
 </html>
