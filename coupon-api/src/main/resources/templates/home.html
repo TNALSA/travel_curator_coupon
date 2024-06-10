@@ -66,14 +66,13 @@
     }
     // Function to be executed when the "Get Coupon" button is clicked
     function couponIssue() {
-        alert("쿠폰이 발급되었습니다.")
         const userId = $("#userId").val();
         $.ajax({
             url: "/v2/issue-async",
             type: "POST",
             data: JSON.stringify({
                 'userId': userId,
-                'couponId': 1
+                'couponId': 2
             }),
             contentType: 'application/json; charset=utf-8',
             dataType: "json",

@@ -2,9 +2,9 @@ spring:
   application:
     name: coupon-api
   profiles:
-    active: local
+    active: coupon
 server:
-  port: 8080
+  port: 7070
   tomcat:
     mbeanregistry:
       enabled: true

@@ -64,3 +64,26 @@ spring:
     redis:
       host: PROD_URL
       port: 6380
+---
+spring:
+  config:
+    activate:
+      on-profile: coupon
+  datasource:
+    hikari:
+      maximum-pool-size: 10
+    url: jdbc:postgresql://database-tour.cluster-ro-crln8mpfedqu.ap-northeast-2.rds.amazonaws.com:5432/postgres
+    username: postgres
+    password: lightening123$
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  data:
+    redis:
+      host: 172.17.0.2 # redis container IP로 변경
+      port: 6379

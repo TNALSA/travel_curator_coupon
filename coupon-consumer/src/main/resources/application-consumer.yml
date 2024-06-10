@@ -2,10 +2,10 @@ spring:
   application:
     name: coupon-consumer
   profiles:
-    active: local
+    active: coupon
 
 server:
-  port: 8081
+  port: 7171
 
 management:
   metrics:
