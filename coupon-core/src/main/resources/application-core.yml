@@ -85,5 +85,5 @@ spring:
         format_sql: true
   data:
     redis:
-      host: 172.17.0.2 # redis container IP로 변경
+      host: 172.18.0.2 # redis container IP로 변경
       port: 6379
